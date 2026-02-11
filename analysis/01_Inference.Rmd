@@ -1,0 +1,14 @@
+# Chapter 1: Inference
+
+For these exercises, we will be using the following dataset:
+
+```{r setup, include=TRUE}
+library(downloader)
+url <- "https://raw.githubusercontent.com/genomicsclass/dagdata/master/inst/extdata/femaleControlsPopulation.csv"
+filename <- basename(url)
+download(url, destfile=filename)
+x <- unlist( read.csv(filename) )
+write.csv(x, "data/femaleControlsPopulation.csv")
+```
+
+Here x represents the weights for the entire population.
