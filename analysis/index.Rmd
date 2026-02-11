@@ -8,4 +8,13 @@ editor_options:
   chunk_output_type: console
 ---
 
-Welcome to my research website.
+This website contains the analysis code for all exercises in the book "Data Analysis_for_the_Life Sciences_2015" 
+by Rafael Irizarry and Michael Love. The code is organized in the same way as the book, with each chapter 
+containing a separate R Markdown file. The code is written in R and uses the tidyverse suite of packages 
+for data manipulation and visualization. The website is built using the workflowr package, which provides a 
+framework for organizing and sharing data analysis projects. The website is hosted on GitHub Pages, and the 
+source code is available on GitHub. 
+
+The chapters covered in this website include:  
+1. [Chapter 1: Inference](01_Inference.html)
+
