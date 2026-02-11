@@ -520,15 +520,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomhalegitDataAnalysisfortheLifeSciences2015tree1f8e5c2e504dbbd49ca7e6132460abc60039f88atargetblank1f8e5c2a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomhalegitDataAnalysisfortheLifeSciences2015treeb20a32685f0fdf2653e685bdba6287726e4930d5targetblankb20a326a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/ha-le-git/Data_Analysis_for_the_Life_Sciences_2015/tree/1f8e5c2e504dbbd49ca7e6132460abc60039f88a" target="_blank">1f8e5c2</a>
+<a href="https://github.com/ha-le-git/Data_Analysis_for_the_Life_Sciences_2015/tree/b20a32685f0fdf2653e685bdba6287726e4930d5" target="_blank">b20a326</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomhalegitDataAnalysisfortheLifeSciences2015tree1f8e5c2e504dbbd49ca7e6132460abc60039f88atargetblank1f8e5c2a"
+id="strongRepositoryversionstrongahrefhttpsgithubcomhalegitDataAnalysisfortheLifeSciences2015treeb20a32685f0fdf2653e685bdba6287726e4930d5targetblankb20a326a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -538,7 +538,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/ha-le-git/Data_Analysis_for_the_Life_Sciences_2015/tree/1f8e5c2e504dbbd49ca7e6132460abc60039f88a" target="_blank">1f8e5c2</a>.
+<a href="https://github.com/ha-le-git/Data_Analysis_for_the_Life_Sciences_2015/tree/b20a32685f0fdf2653e685bdba6287726e4930d5" target="_blank">b20a326</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -552,10 +552,6 @@ depends on. Below is the status of the Git repository when the results
 were generated:
 </p>
 <pre><code>
-Untracked files:
-    Untracked:  data/femaleControlsPopulation.csv
-    Untracked:  femaleControlsPopulation.csv
-
 Unstaged changes:
     Modified:   analysis/01_Inference.Rmd
 
@@ -602,6 +598,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/ha-le-git/Data_Analysis_for_the_Life_Sciences_2015/blob/b20a32685f0fdf2653e685bdba6287726e4930d5/analysis/01_Inference.Rmd" target="_blank">b20a326</a>
+</td>
+<td>
+hale
+</td>
+<td>
+2026-02-11
+</td>
+<td>
+Commit changes in Chapter 01 with VSCode
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/ha-le-git/Data_Analysis_for_the_Life_Sciences_2015/b20a32685f0fdf2653e685bdba6287726e4930d5/docs/01_Inference.html" target="_blank">b20a326</a>
+</td>
+<td>
+hale
+</td>
+<td>
+2026-02-11
+</td>
+<td>
+Commit changes in Chapter 01 with VSCode
+</td>
+</tr>
 <tr>
 <td>
 html
@@ -653,6 +683,128 @@ download(url, destfile=filename)
 x &lt;- unlist( read.csv(filename) )
 write.csv(x, &quot;data/femaleControlsPopulation.csv&quot;)</code></pre>
 <p>Here x represents the weights for the entire population.</p>
+<ol style="list-style-type: decimal">
+<li>What is the average of these weights?</li>
+</ol>
+<pre class="r"><code>mean(x)</code></pre>
+<pre><code>[1] 23.89338</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>After setting the seed at 1, set.seed(1) take a random sample of
+size 5. What is the absolute value (use abs) of the difference between
+the average of the sample and the average of all the values?</li>
+</ol>
+<pre class="r"><code>set.seed(1)
+sample &lt;- sample(x, 5)
+abs(mean(sample) - mean(x))</code></pre>
+<pre><code>[1] 0.3293778</code></pre>
+<ol start="3" style="list-style-type: decimal">
+<li>After setting the seed at 5, set.seed(5) take a random sample of
+size 5. What is the absolute value of the difference between the average
+of the sample and the average of all the values?</li>
+</ol>
+<pre class="r"><code>set.seed(5)
+sample &lt;- sample(x, 5)
+abs(mean(sample) - mean(x))</code></pre>
+<pre><code>[1] 0.3813778</code></pre>
+<ol start="4" style="list-style-type: decimal">
+<li><p>Why are the answers from 2 and 3 different?<br />
+<strong>Answer:</strong> C. Because the average of the samples is a
+random variable.</p></li>
+<li><p>Set the seed at 1, then using a for-loop take a random sample of
+5 mice 1,000 times. Save these averages. What percent of these 1,000
+averages are more than 1 ounce away from the average of x ?</p></li>
+</ol>
+<pre class="r"><code>set.seed(1)
+n &lt;- 1000
+null &lt;- vector(&quot;numeric&quot;,n)
+for (i in 1:n) {
+    sample &lt;- sample(x, 5)
+    null[i] &lt;- mean(sample)- mean(x)
+}
+mean(null &gt; 1)</code></pre>
+<pre><code>[1] 0.232</code></pre>
+<pre class="r"><code>hist(null)</code></pre>
+<p><img src="figure/01_Inference.Rmd/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto;" /></p>
+<ol start="6" style="list-style-type: decimal">
+<li>We are now going to increase the number of times we redo the sample
+from 1,000 to 10,000. Set the seed at 1, then using a for-loop take a
+random sample of 5 mice 10,000 times. Save these averages. What percent
+of these 10,000 averages are more than 1 ounce away from the average of
+x ?</li>
+</ol>
+<pre class="r"><code>set.seed(1)
+n &lt;- 10000
+null &lt;- vector(&quot;numeric&quot;,n)
+for (i in 1:n) {
+    sample &lt;- sample(x, 5)
+    null[i] &lt;- mean(sample)- mean(x)
+}
+mean(null &gt; 1)</code></pre>
+<pre><code>[1] 0.2448</code></pre>
+<pre class="r"><code>hist(null)</code></pre>
+<p><img src="figure/01_Inference.Rmd/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" /></p>
+<ol start="7" style="list-style-type: decimal">
+<li>Note that the answers to 5 and 6 barely changed. This is expected.
+The way we think about the random value distributions is as the
+distribution of the list of values obtained if we repeated the
+experiment an infinite number of times. On a computer, we can’t perform
+an infinite number of iterations so instead, for our examples, we
+consider 1,000 to be large enough, thus 10,000 is as well. Now if
+instead we change the sample size, then we change the random variable
+and thus its distribution.</li>
+</ol>
+<p>Set the seed at 1, then using a for-loop take a random sample of 50
+mice 1,000 times. Save these averages. What percent of these 1,000
+averages are more than 1 ounce away from the average of x ?</p>
+<pre class="r"><code>set.seed(1)
+n &lt;- 1000
+null &lt;- vector(&quot;numeric&quot;,n)
+for (i in 1:n) {
+    sample &lt;- sample(x, 50)
+    null[i] &lt;- mean(sample)- mean(x)
+}
+mean(null &gt; 1)</code></pre>
+<pre><code>[1] 0.009</code></pre>
+<pre class="r"><code>hist(null)</code></pre>
+<p><img src="figure/01_Inference.Rmd/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" /></p>
+<ol start="8" style="list-style-type: decimal">
+<li><p>Use a histogram to “look” at the distribution of averages we get
+with a sample size of 5 and a sample size of 50. How would you say they
+differ?<br />
+<strong>Answer:</strong> B. They both look roughly normal, but with a
+sample size of 50 the spread is smaller. When we have more samples, the
+difference between the mean of the sample and the mean of the population
+is smaller, i.e. we could infer the population mean better with more
+samples.</p></li>
+<li><p>For the last set of averages, the ones obtained from a sample
+size of 50, what percent are between 23 and 25?</p></li>
+</ol>
+<pre class="r"><code>set.seed(1)
+n &lt;- 1000
+avg &lt;- vector(&quot;numeric&quot;,n)
+for (i in 1:n) {
+    sample &lt;- sample(x, 50)
+    avg[i] &lt;- mean(sample)
+}
+mean(avg &gt; 23 &amp; avg &lt; 25)</code></pre>
+<pre><code>[1] 0.982</code></pre>
+<pre class="r"><code>hist(avg)</code></pre>
+<p><img src="figure/01_Inference.Rmd/unnamed-chunk-7-1.png" width="672" style="display: block; margin: auto;" /></p>
+<ol start="10" style="list-style-type: decimal">
+<li>Now ask the same question of a normal distribution with average 23.9
+and standard deviation 0.43. <code>pnorm</code> computes the cumulative
+distribution function (CDF) of the normal distribution. It calculates
+the probability that a value is less than or equal to a given
+point.</li>
+</ol>
+<pre class="r"><code>#calculating the probability that values are greater than 23 and 25 separately, rather than the probability that values are between 23 and 25.
+# 1 - pnorm(q= c(23,25), mean = 23.9, sd= 0.43) 
+#correct code
+pnorm(q= 25, mean = 23.9, sd= 0.43) - pnorm(q= 23, mean = 23.9, sd= 0.43)</code></pre>
+<pre><code>[1] 0.9765648</code></pre>
+<p>The answer to 9 and 10 were very similar. This is because we can
+approximate the distribution of the sample average with a normal
+distribution. We will learn more about the reason for this next.</p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
