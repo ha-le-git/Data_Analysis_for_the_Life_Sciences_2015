@@ -1,11 +1,13 @@
 # Chapter 1: Inference
 
+## Normal Distribution
+
 For these exercises, we will be using the following dataset:
 
 ```{r setup, include=TRUE}
 library(downloader)
 url <- "https://raw.githubusercontent.com/genomicsclass/dagdata/master/inst/extdata/femaleControlsPopulation.csv"
-filename <- basename(url)
+filename <- file.path("data", basename(url))
 download(url, destfile=filename)
 x <- unlist( read.csv(filename) )
 write.csv(x, "data/femaleControlsPopulation.csv")
@@ -133,3 +135,339 @@ pnorm(q= 25, mean = 23.9, sd= 0.43) - pnorm(q= 23, mean = 23.9, sd= 0.43)
 
 The answer to 9 and 10 were very similar. This is because we can approximate the distribution of
 the sample average with a normal distribution. We will learn more about the reason for this next.
+
+## Populations, Samples and Estimates
+
+```{r}
+library(downloader)
+url <- "https://raw.githubusercontent.com/genomicsclass/dagdata/master/inst/extdata/mice_pheno.csv"
+filename <- file.path("data", basename(url))
+download(url, destfile=filename)
+dat <- read.csv(filename)
+dat <- na.omit(dat)
+head(dat)
+```
+
+1. Use dplyr to create a vector x with the body weight of all males on the control (chow) diet.
+What is this population’s average?
+
+```{r}
+library(dplyr)
+m_chow <- dat %>%
+    filter(Sex == "M", Diet == "chow") %>%
+    select(Bodyweight) %>%
+    unlist()
+mean(m_chow)
+```
+
+2. Now use the rafalib package and use the popsd function to compute the population
+standard deviation.
+
+```{r}
+#install.packages("rafalib")
+library(rafalib)
+popsd(m_chow)
+```
+
+3. Set the seed at 1. Take a random sample X of size 25 from x. What is the sample average?
+
+```{r}
+set.seed(1)
+sample_m_chow <- sample(m_chow,25)
+mean(sample_m_chow)
+```
+
+4. Use dplyr to create a vector y with the body weight of all males on the high fat (hf) diet.
+What is this population’s average?
+
+```{r}
+m_hf <- dat %>%
+    filter(Sex == "M", Diet == "hf") %>%
+    select(Bodyweight) %>%
+    unlist()
+mean(m_hf)
+```    
+
+5. Now use the rafalib package and use the popsd function to compute the population
+standard deviation.
+
+```{r}
+popsd(m_hf)
+```
+
+6. Set the seed at 1. Take a random sample Y of size 25 from y. What is the sample average?
+
+```{r}
+set.seed(1)
+sample_m_hf <- sample(m_hf,25)
+mean(sample_m_hf)
+```
+
+7. What is the difference in absolute value between mean(m_hf)-mean(m_chow) and mean(sample_m_chow)-mean(sample_m_hf)?
+
+```{r}
+#abs(abs((mean(y) - mean(x))) - abs((mean(sample_y) - mean(sample_x))))
+abs((mean(m_hf) - mean(m_chow)) - (mean(sample_m_hf) - mean(sample_m_chow)))
+```
+
+8. Repeat the above for females. Make sure to set the seed to 1 before each sample call. What
+is the difference in absolute value between mean(y)-mean(x) and mean(sample_y)-mean(sample_x)?
+
+```{r}
+#Population average and standard deviation for females mouse on chow diet
+library(dplyr)
+f_chow <- dat %>%
+    filter(Sex == "F", Diet == "chow") %>%
+    select(Bodyweight) %>%
+    unlist()
+mean(f_chow)
+popsd(f_chow)
+
+#Sample average for 25 females on chow diet
+set.seed(1)
+sample_f_chow <- sample(f_chow,25)
+mean(sample_f_chow)
+```
+
+```{r}
+#Population average and standard deviation for females mouse on hf diet
+library(dplyr)
+f_hf <- dat %>%
+    filter(Sex == "F", Diet == "hf") %>%
+    select(Bodyweight) %>%
+    unlist()
+mean(f_hf)
+popsd(f_hf)
+
+#Sample average for 25 females on hf diet
+set.seed(1)
+sample_f_hf <- sample(f_hf,25)
+mean(sample_f_hf)
+```
+
+```{r}
+abs((mean(f_hf) - mean(f_chow)) - (mean(sample_f_hf) - mean(sample_f_chow)))
+```
+
+9. For the females, our sample estimates were closer to the population difference than with
+males. What is a possible explanation for this?  
+
+**Answer:**  
+- With seed=1, males closer (1.40 < 1.75). Females *typically* closer due to **lower population SDs**.  
+- Typical correct answer: A. The population variance of the females is smaller than that of the males; thus, the
+sample variable has less variability.
+
+## Central Limit Theorem and t-distribution
+
+### Central Limit Theorem
+When the sample size is large, the average $\\bar{Y}$ of a random sample follows a normal distribution 
+centered at the population average µ and with standard deviation equal to the population 
+standard deviation σ, divided by the square root of the sample size N. We refer to the 
+standard deviation of the distribution of a random variable as the random variable’s **standard error**.
+
+```{r}
+library(downloader)
+url <- "https://raw.githubusercontent.com/genomicsclass/dagdata/master/inst/extdata/mice_pheno.csv"
+filename <- file.path("data", basename(url))
+download(url, destfile=filename)
+dat <- na.omit(read.csv(filename))
+```
+
+1. If a list of numbers has a distribution that is well approximated by the normal distribution,
+what proportion of these numbers are within one standard deviation away from the list’s
+average?
+
+```{r}
+pnorm(q=1, mean=0, sd=1) - pnorm(q=-1, mean=0, sd=1)
+``` 
+For the normal distribution: ~68% of values are within 1 SD
+
+2. What proportion of these numbers are within two standard deviations away from the list’s
+average?
+
+```{r}
+pnorm(q=2, mean=0, sd=1) - pnorm(q=-2, mean=0, sd=1)
+``` 
+For the normal distribution: ~95% of values are within 2 SDs
+
+3. What proportion of these numbers are within three standard deviations away from the list’s
+average?
+
+```{r}
+pnorm(q=3, mean=0, sd=1) - pnorm(q=-3, mean=0, sd=1)
+``` 
+For the normal distribution: ~99.7% of values are within 3 SDs
+
+4. Define y to be the weights of males on the control diet. What proportion of the mice are
+within one standard deviation away from the average weight (remember to use popsd for
+the population sd)?
+
+```{r}
+y <- dat %>%
+    filter(Sex == "M", Diet == "chow") %>%
+    select(Bodyweight) %>%
+    unlist()
+mean(y)
+popsd(y)
+hist(y)
+
+pnorm(q= mean(y)+ popsd(y), mean=mean(y), sd= popsd(y)) - pnorm(q= mean(y)- popsd(y), mean=mean(y), sd= popsd(y))
+```
+For y that approximately follows a normal distribution: ~68% of values are within 1 SD
+
+5. What proportion of these numbers are within two standard deviations away from the list’s
+average?
+
+```{r}
+pnorm(q= mean(y)+ 2*popsd(y), mean=mean(y), sd= popsd(y)) - pnorm(q= mean(y)- 2*popsd(y), mean=mean(y), sd= popsd(y))
+```
+For y that approximately follows a normal distribution: ~95% of values are within 2 SDs
+
+6. What proportion of these numbers are within three standard deviations away from the list’s
+average?
+```{r}
+pnorm(q= mean(y)+ 3*popsd(y), mean=mean(y), sd= popsd(y)) - pnorm(q= mean(y)- 3*popsd(y), mean=mean(y), sd= popsd(y))
+```
+For y that approximately follows a normal distribution: ~99.7% of values are within 3 SDs
+
+7. Note that the numbers for the normal distribution and our weights are relatively close. Also,
+notice that we are indirectly comparing quantiles of the normal distribution to quantiles
+of the mouse weight distribution. We can actually compare all quantiles using a qqplot.
+
+```{r}
+qqnorm(y)
+qqline(y)
+```
+
+**Answer:** C) The mouse weights are well approximated by the normal distribution, although
+the larger values (right tail) are larger than predicted by the normal. This is consistent
+with the differences seen between question 3 and 6. 
+
+8. Create the above qq-plot for the four populations: male/females on each of the two diets. What
+is the best explanation for all these being well approximated by the normal distribution?
+
+```{r}
+mypar(2,2)
+#Male chow
+y_m_chow <- dat %>%
+    filter(Sex == "M", Diet == "chow") %>%
+    select(Bodyweight) %>%
+    unlist()
+qqnorm(y_m_chow)
+qqline(y_m_chow)        
+
+#Male hf
+y_m_hf <- dat %>%
+    filter(Sex == "M", Diet == "hf") %>%
+    select(Bodyweight) %>%
+    unlist()
+qqnorm(y_m_hf)
+qqline(y_m_hf)      
+
+#Female chow
+y_f_chow <- dat %>%
+    filter(Sex == "F", Diet == "chow") %>%
+    select(Bodyweight) %>%
+    unlist()
+qqnorm(y_f_chow)
+qqline(y_f_chow)    
+
+#Female hf
+y_f_hf <- dat %>%
+    filter(Sex == "F", Diet == "hf") %>%
+    select(Bodyweight) %>%
+    unlist()
+qqnorm(y_f_hf)
+qqline(y_f_hf)
+```
+
+**Answer:** A) The CLT tells us that sample averages are approximately normal.
+
+9. Here we are going to use the function `replicate` to learn about the distribution of random
+variables. All the above exercises relate to the normal distribution as an approximation of the
+distribution of a fixed list of numbers or a population. We have not yet discussed probability
+in these exercises. If the distribution of a list of numbers is approximately normal, then if
+we pick a number at random from this distribution, it will follow a normal distribution.
+However, it is important to remember that stating that some quantity has a distribution does
+not necessarily imply this quantity is random. Also, keep in mind that this is not related to
+the central limit theorem. The central limit applies to averages of random variables. Let’s
+explore this concept.
+
+We will now take a sample of size 25 from the population of males on the chow diet. The
+average of this sample is our random variable. We will use the replicate to observe 10,000
+realizations of this random variable. Set the seed at 1, generate these 10,000 averages. Make
+a histogram and qq-plot of these 10,000 numbers against the normal distribution.
+We can see that, as predicted by the CLT, the distribution of the random variable is very
+well approximated by the normal distribution.
+
+
+```{r }
+set.seed(1)
+y <- filter(dat, Sex=="M" & Diet=="chow") %>% select(Bodyweight) %>% unlist
+avgs <- replicate(10000, mean(sample(y, 25)))
+mypar(1,2)
+hist(avgs)
+qqnorm(avgs)
+qqline(avgs)
+```
+
+What is the average of the distribution of the sample average?
+
+```{r}
+mean(avgs)
+```
+
+10. What is the standard deviation of the distribution of sample averages?
+
+```{r}
+sd(avgs)
+```
+
+11. According to the CLT, the answer to exercise 9 should be the same as mean(y). You should
+be able to confirm that these two numbers are very close. Which of the following does the
+CLT tell us should be close to your answer to exercise 10?
+
+```{r}
+popsd(y)/sqrt(25)
+```
+
+12. In practice we do not know σ (popsd(y)) which is why we can’t use the CLT directly. This
+is because we see a sample and not the entire distribution. We also can’t use popsd(avgs)
+because to construct averages, we have to take 10,000 samples and this is never practical. We
+usually just get one sample. Instead we have to estimate popsd(y). As described, what we
+use is the sample standard deviation. Set the seed at 1, using the replicate function, create
+10,000 samples of 25 and now, instead of the sample average, keep the standard deviation.
+Look at the distribution of the sample standard deviations. It is a random variable. The real
+population SD is about 4.5. What proportion of the sample SDs are below 3.5?
+
+```{r}
+set.seed(1)
+y <- dat %>% filter(Sex=="M" & Diet=="chow") %>% select(Bodyweight) %>% unlist
+sds <- replicate(10000, sd(sample(y, 25)))
+mean(sds < 3.5)
+```
+
+13. What the answer to question 12 reveals is that the denominator of the t-test is a random
+variable. By decreasing the sample size, you can see how this variability can increase.
+It therefore adds variability. The smaller the sample size, the more variability is added.
+The normal distribution stops providing a useful approximation. When the distribution of
+the population values is approximately normal, as it is for the weights, the t-distribution
+provides a better approximation. We will see this later on. Here we will look at the difference
+between the t-distribution and normal. Use the function qt and qnorm to get the quantiles of
+x=seq(0.0001,0.9999,len=300). Do this for degrees of freedom 3, 10, 30, and 100. Which
+of the following is true?
+
+```{r}
+x <- seq(0.0001,0.9999,len=300)
+mypar(3,2)
+plot(x, qt(x, df=3), type="l", main="df=3")
+plot(x, qt(x, df=10), type="l", main="df=10")
+plot(x, qt(x, df=30), type="l", main="df=30")
+plot(x, qt(x, df=100), type="l", main="df=100")
+plot(x, qnorm(x), type="l", main="Normal")
+lines(x, qnorm(x), col="red")
+```
+
+**Answer:**  C) The t-distribution has larger tails up until 30 degrees of freedom, at which point it
+is practically the same as the normal distribution.
+
