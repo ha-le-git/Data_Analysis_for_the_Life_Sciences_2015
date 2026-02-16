@@ -385,7 +385,7 @@ aria-hidden="true"></span> </a>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2026-02-12
+<strong>Last updated:</strong> 2026-02-16
 </p>
 <p>
 <strong>Checks:</strong> <span
@@ -520,15 +520,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomhalegitDataAnalysisfortheLifeSciences2015tree52180bd471127ad6ace305bfdf9441930143bb2atargetblank52180bda">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomhalegitDataAnalysisfortheLifeSciences2015tree7a4e8b5c433df5bed280d6cbcf62b126e5ca8069targetblank7a4e8b5a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/ha-le-git/Data_Analysis_for_the_Life_Sciences_2015/tree/52180bd471127ad6ace305bfdf9441930143bb2a" target="_blank">52180bd</a>
+<a href="https://github.com/ha-le-git/Data_Analysis_for_the_Life_Sciences_2015/tree/7a4e8b5c433df5bed280d6cbcf62b126e5ca8069" target="_blank">7a4e8b5</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomhalegitDataAnalysisfortheLifeSciences2015tree52180bd471127ad6ace305bfdf9441930143bb2atargetblank52180bda"
+id="strongRepositoryversionstrongahrefhttpsgithubcomhalegitDataAnalysisfortheLifeSciences2015tree7a4e8b5c433df5bed280d6cbcf62b126e5ca8069targetblank7a4e8b5a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -538,7 +538,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/ha-le-git/Data_Analysis_for_the_Life_Sciences_2015/tree/52180bd471127ad6ace305bfdf9441930143bb2a" target="_blank">52180bd</a>.
+<a href="https://github.com/ha-le-git/Data_Analysis_for_the_Life_Sciences_2015/tree/7a4e8b5c433df5bed280d6cbcf62b126e5ca8069" target="_blank">7a4e8b5</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -552,11 +552,12 @@ depends on. Below is the status of the Git repository when the results
 were generated:
 </p>
 <pre><code>
-Untracked files:
-    Untracked:  data/femaleMiceWeights.csv
+Ignored files:
+    Ignored:    .DS_Store
 
 Unstaged changes:
     Modified:   analysis/01_Inference.Rmd
+    Modified:   data/femaleControlsPopulation.csv
 
 </code></pre>
 <p>
@@ -601,6 +602,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/ha-le-git/Data_Analysis_for_the_Life_Sciences_2015/blob/7a4e8b5c433df5bed280d6cbcf62b126e5ca8069/analysis/01_Inference.Rmd" target="_blank">7a4e8b5</a>
+</td>
+<td>
+hale
+</td>
+<td>
+2026-02-13
+</td>
+<td>
+Chapter 01_Page 48_Done
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/ha-le-git/Data_Analysis_for_the_Life_Sciences_2015/7a4e8b5c433df5bed280d6cbcf62b126e5ca8069/docs/01_Inference.html" target="_blank">7a4e8b5</a>
+</td>
+<td>
+hale
+</td>
+<td>
+2026-02-13
+</td>
+<td>
+Chapter 01_Page 48_Done
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -746,6 +781,60 @@ Start my new project
 </div>
 <div id="chapter-1-inference" class="section level1">
 <h1>Chapter 1: Inference</h1>
+<p>From the following exercises, we obtain some remarks:<br />
+1. Normal distribution:<br />
+- The average of a random sample is a random variable.<br />
+- The distribution of a random variable is the distribution of the list
+of values obtained if we repeated the experiment an infinite number of
+times. Increasing the number of times we repeat the experiment does not
+change drastically the distribution, but it allows us to better
+approximate it.<br />
+- Increasing the sample size changes the random variable and thus its
+distribution.<br />
+For eg: The larger the sample size, the smaller the spread of the
+distribution of mean(pop)-mean(sample).</p>
+<ol start="2" style="list-style-type: decimal">
+<li><p>Populations, samples and estimates:</p></li>
+<li><p>Central Limit Theorem and t-distribution:<br />
+</p></li>
+</ol>
+<ul>
+<li>Use <code>popsd()</code> and <code>popvar()</code> of
+<code>rafalib</code> package to compute population standard deviation
+and variance.<br />
+</li>
+<li>Use <code>sd()</code> and <code>var()</code> to compute sample
+standard deviation and variance (with N-1 in the denominator).<br />
+</li>
+<li>When the distribution of the population values is approximately
+normal, as it is for the weights, the t-distribution provides a better
+approximation. The t-distribution has larger tails up until 30 degrees
+of freedom, at which point it is practically the same as the normal
+distribution.</li>
+</ul>
+<ol start="4" style="list-style-type: decimal">
+<li>Central Limit Theorem in practice:<br />
+</li>
+</ol>
+<ul>
+<li>The variance of binary data is <code>p * (1-p)</code>, where p is
+the success probability. For quantitative data, we need to estimate the
+population standard deviation.<br />
+</li>
+<li>With very low probabilities, we need larger sample sizes for the CLT
+to “kick in”.<br />
+</li>
+<li>The CLT tells us that the distribution of <code>Xbar</code> is
+approximately normal with mean <strong>µX</strong> and standard
+deviation σx/√n, where σx is the population standard deviation and n is
+the sample size. <strong>Ideally, Xbar is obtained after infinite number
+of sampling of size n from the population.</strong> In practice, we only
+sample Xbar once. The bigger the sample size n, the smaller the SD of
+Xbar.</li>
+<li><code>Z= √n*(Xbar-µX)/σx</code> follows a normal distribution with
+mean 0 and standard deviation 1. Important, both Z and Xbar are random
+variables and follow a distribution.</li>
+</ul>
 <div id="normal-distribution" class="section level2">
 <h2>Normal Distribution</h2>
 <p>For these exercises, we will be using the following dataset:</p>
@@ -1049,11 +1138,11 @@ the control (chow) diet. What is this population’s average?</li>
 </ol>
 <pre class="r"><code>library(dplyr)</code></pre>
 <pre><code>
-Attachement du package : &#39;dplyr&#39;</code></pre>
-<pre><code>Les objets suivants sont masqués depuis &#39;package:stats&#39;:
+Attaching package: &#39;dplyr&#39;</code></pre>
+<pre><code>The following objects are masked from &#39;package:stats&#39;:
 
     filter, lag</code></pre>
-<pre><code>Les objets suivants sont masqués depuis &#39;package:base&#39;:
+<pre><code>The following objects are masked from &#39;package:base&#39;:
 
     intersect, setdiff, setequal, union</code></pre>
 <pre class="r"><code>m_chow &lt;- dat %&gt;%
@@ -1392,7 +1481,7 @@ hale
 </div>
 </div>
 <p><strong>Answer:</strong> A) The CLT tells us that sample averages are
-approximately normal.</p>
+approximately normal when the sample size is large.</p>
 <ol start="9" style="list-style-type: decimal">
 <li>Here we are going to use the function <code>replicate</code> to
 learn about the distribution of random variables. All the above
@@ -1400,13 +1489,13 @@ exercises relate to the normal distribution as an approximation of the
 distribution of a fixed list of numbers or a population. We have not yet
 discussed probability in these exercises. If the distribution of a list
 of numbers is approximately normal, then if we pick a number at random
-from this distribution, it will follow a normal distribution. However,
-it is important to remember that stating that some quantity has a
-distribution does not necessarily imply this quantity is random. Also,
-keep in mind that this is not related to the central limit theorem. The
-central limit applies to averages of random variables. Let’s explore
-this concept.</li>
+from this distribution, it will follow a normal distribution.</li>
 </ol>
+<p>However, it is important to remember that stating that some quantity
+has a distribution does not necessarily imply this quantity is random.
+Also, keep in mind that this is not related to the central limit
+theorem. The central limit applies to averages of random variables.
+Let’s explore this concept.</p>
 <p>We will now take a sample of size 25 from the population of males on
 the chow diet. The average of this sample is our random variable. We
 will use the replicate to observe 10,000 realizations of this random
@@ -1469,6 +1558,10 @@ averages?</li>
 </ol>
 <pre class="r"><code>sd(avgs)</code></pre>
 <pre><code>[1] 0.8271233</code></pre>
+<pre class="r"><code>#sd() and var() computes sample SD with N-1 in the denominator:
+samplevar &lt;- sum((avgs-mean(avgs))^2)/(length(avgs)-1)
+samplevar == var(avgs)</code></pre>
+<pre><code>[1] TRUE</code></pre>
 <ol start="11" style="list-style-type: decimal">
 <li>According to the CLT, the answer to exercise 9 should be the same as
 mean(y). You should be able to confirm that these two numbers are very
@@ -1493,7 +1586,9 @@ are below 3.5?</li>
 <pre class="r"><code>set.seed(1)
 y &lt;- dat %&gt;% filter(Sex==&quot;M&quot; &amp; Diet==&quot;chow&quot;) %&gt;% select(Bodyweight) %&gt;% unlist
 sds &lt;- replicate(10000, sd(sample(y, 25)))
-mean(sds &lt; 3.5)</code></pre>
+hist(sds)</code></pre>
+<p><img src="figure/01_Inference.Rmd/unnamed-chunk-33-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>mean(sds &lt; 3.5)</code></pre>
 <pre><code>[1] 0.0942</code></pre>
 <ol start="13" style="list-style-type: decimal">
 <li>What the answer to question 12 reveals is that the denominator of
@@ -1592,6 +1687,43 @@ n&lt;- 100
 x= sample(1:6, n, replace=TRUE)
 hist(x)</code></pre>
 <p><img src="figure/01_Inference.Rmd/unnamed-chunk-36-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-36-1">
+Past versions of unnamed-chunk-36-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-36-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/ha-le-git/Data_Analysis_for_the_Life_Sciences_2015/blob/7a4e8b5c433df5bed280d6cbcf62b126e5ca8069/docs/figure/01_Inference.Rmd/unnamed-chunk-36-1.png" target="_blank">7a4e8b5</a>
+</td>
+<td>
+hale
+</td>
+<td>
+2026-02-13
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>prob_6 &lt;- mean(x==6)
 prob_6</code></pre>
 <pre><code>[1] 0.21</code></pre>
@@ -1612,6 +1744,43 @@ prop_6_10k &lt;- replicate(t, {
 
 hist(prop_6_10k)</code></pre>
 <p><img src="figure/01_Inference.Rmd/unnamed-chunk-37-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-37-1">
+Past versions of unnamed-chunk-37-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-37-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/ha-le-git/Data_Analysis_for_the_Life_Sciences_2015/blob/7a4e8b5c433df5bed280d6cbcf62b126e5ca8069/docs/figure/01_Inference.Rmd/unnamed-chunk-37-1.png" target="_blank">7a4e8b5</a>
+</td>
+<td>
+hale
+</td>
+<td>
+2026-02-13
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>mean(prop_6_10k)- p</code></pre>
 <pre><code>[1] -0.0005406667</code></pre>
 <pre class="r"><code>var_6_10k &lt;- popvar(prop_6_10k)
@@ -1625,6 +1794,43 @@ should be normal with mean 0 and SD 1.</p>
 <pre class="r"><code>z &lt;- (prop_6_10k - p) / sqrt(p*(1-p)/n) #z should be normal with mean 0 and SD 1 (CLT)
 hist(z)</code></pre>
 <p><img src="figure/01_Inference.Rmd/unnamed-chunk-38-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-38-1">
+Past versions of unnamed-chunk-38-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-38-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/ha-le-git/Data_Analysis_for_the_Life_Sciences_2015/blob/7a4e8b5c433df5bed280d6cbcf62b126e5ca8069/docs/figure/01_Inference.Rmd/unnamed-chunk-38-1.png" target="_blank">7a4e8b5</a>
+</td>
+<td>
+hale
+</td>
+<td>
+2026-02-13
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>#The proportion of times z was larger than 2 in absolute value
 mean(abs(z) &gt; 2)</code></pre>
 <pre><code>[1] 0.0431</code></pre>
@@ -1647,6 +1853,43 @@ the normal approximation best?</li>
 <pre class="r"><code>qqnorm(z)
 qqline(z)</code></pre>
 <p><img src="figure/01_Inference.Rmd/unnamed-chunk-39-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-39-1">
+Past versions of unnamed-chunk-39-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-39-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/ha-le-git/Data_Analysis_for_the_Life_Sciences_2015/blob/7a4e8b5c433df5bed280d6cbcf62b126e5ca8069/docs/figure/01_Inference.Rmd/unnamed-chunk-39-1.png" target="_blank">7a4e8b5</a>
+</td>
+<td>
+hale
+</td>
+<td>
+2026-02-13
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>set.seed(1)
 n &lt;- 5
 t &lt;- 10000
@@ -1658,6 +1901,43 @@ z &lt;- replicate(t, {
 })
 hist(z)</code></pre>
 <p><img src="figure/01_Inference.Rmd/unnamed-chunk-40-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-40-1">
+Past versions of unnamed-chunk-40-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-40-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/ha-le-git/Data_Analysis_for_the_Life_Sciences_2015/blob/7a4e8b5c433df5bed280d6cbcf62b126e5ca8069/docs/figure/01_Inference.Rmd/unnamed-chunk-40-1.png" target="_blank">7a4e8b5</a>
+</td>
+<td>
+hale
+</td>
+<td>
+2026-02-13
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>set.seed(1)
 n &lt;- 30
 t &lt;- 10000
@@ -1669,6 +1949,43 @@ z &lt;- replicate(t, {
 })
 hist(z)</code></pre>
 <p><img src="figure/01_Inference.Rmd/unnamed-chunk-40-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-40-2">
+Past versions of unnamed-chunk-40-2.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-40-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/ha-le-git/Data_Analysis_for_the_Life_Sciences_2015/blob/7a4e8b5c433df5bed280d6cbcf62b126e5ca8069/docs/figure/01_Inference.Rmd/unnamed-chunk-40-2.png" target="_blank">7a4e8b5</a>
+</td>
+<td>
+hale
+</td>
+<td>
+2026-02-13
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>set.seed(1)
 n &lt;- 30
 t &lt;- 10000
@@ -1680,6 +1997,43 @@ z &lt;- replicate(t, {
 })
 hist(z)</code></pre>
 <p><img src="figure/01_Inference.Rmd/unnamed-chunk-40-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-40-3">
+Past versions of unnamed-chunk-40-3.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-40-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/ha-le-git/Data_Analysis_for_the_Life_Sciences_2015/blob/7a4e8b5c433df5bed280d6cbcf62b126e5ca8069/docs/figure/01_Inference.Rmd/unnamed-chunk-40-3.png" target="_blank">7a4e8b5</a>
+</td>
+<td>
+hale
+</td>
+<td>
+2026-02-13
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>set.seed(1)
 n &lt;- 100
 t &lt;- 10000
@@ -1691,7 +2045,254 @@ z &lt;- replicate(t, {
 })
 hist(z)</code></pre>
 <p><img src="figure/01_Inference.Rmd/unnamed-chunk-40-4.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-40-4">
+Past versions of unnamed-chunk-40-4.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-40-4" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/ha-le-git/Data_Analysis_for_the_Life_Sciences_2015/blob/7a4e8b5c433df5bed280d6cbcf62b126e5ca8069/docs/figure/01_Inference.Rmd/unnamed-chunk-40-4.png" target="_blank">7a4e8b5</a>
+</td>
+<td>
+hale
+</td>
+<td>
+2026-02-13
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <p><strong>Answer</strong> D) p=0.01 and n=100</p>
+<ol start="3" style="list-style-type: decimal">
+<li>As we have already seen, the CLT also applies to averages of
+quantitative data. A major difference with binary data, for which we
+know the variance is <code>p * (1−p)</code>, is that with quantitative
+data we need to estimate the population standard deviation.</li>
+</ol>
+<p>In several previous exercises we have illustrated statistical
+concepts with the unrealistic situation of having access to the entire
+population. In practice, we do not have access to entire populations.
+Instead, we obtain one random sample and need to reach conclusions
+analyzing that data. dat is an example of a typical simple dataset
+representing just one sample. We have 12 measurements for each of two
+populations:</p>
+<pre class="r"><code>X &lt;- filter(dat, Diet==&quot;chow&quot;) %&gt;% select(Bodyweight) %&gt;% unlist
+Y &lt;- filter(dat, Diet==&quot;hf&quot;) %&gt;% select(Bodyweight) %&gt;% unlist</code></pre>
+<p>We think of X as a random sample from the population of all mice in
+the control diet and Y as a random sample from the population of all
+mice in the high fat diet.</p>
+<p>Define the parameter µx as the average of the control population. We
+estimate this parameter with the sample average. What is the sample
+average?</p>
+<pre class="r"><code>mean(X)</code></pre>
+<pre><code>[1] 23.81333</code></pre>
+<ol start="4" style="list-style-type: decimal">
+<li>We don’t know µX, but want to use Xbar to understand µX. Which of
+the following uses CLT to understand how well Xbar approximates µX?</li>
+</ol>
+<ol style="list-style-type: upper-alpha">
+<li><p>Xbar follows a normal distribution with mean 0 and standard
+deviation 1.<br />
+–&gt; <strong>Wrong</strong> not Xbar= 0, but <strong>standardized
+difference</strong> <code>Z= (Xbar-µX)/(σx/√n)</code> have means=
+0.</p></li>
+<li><p>µX follows a normal distribution with mean Xbar and standard
+deviation σx√12 where σx is the population standard deviation.<br />
+–&gt; <strong>Wrong</strong>: <strong>µX is a fixed parameter</strong>,
+not a random variable, thus it does not have a distribution.</p></li>
+<li><p>Xbar follows a normal distribution with mean µX and standard
+deviation σx where σx is the population standard deviation.<br />
+–&gt; <strong>Wrong</strong>: The standard deviation of the distribution
+of Xbar is not σx, but σx/√n. </p></li>
+<li><p>Xbar follows a normal distribution with mean µX and standard
+deviation σx/√12 where σx is the population standard deviation.<br />
+–&gt; <strong>Correct</strong>: The CLT tells us that the distribution
+of Xbar is approximately normal with mean <strong>µX</strong> and
+standard deviation σx/√n, where σx is the population standard deviation
+and n is the sample size (12 in this case).</p></li>
+</ol>
+<ol start="5" style="list-style-type: decimal">
+<li><p>The result above tells us the distribution of the following
+random variable: <code>Z= √12*(Xbar-µX)/σx</code>. What does the CLT
+tell us is the mean of Z (you don’t need code)?<br />
+–&gt; <strong>Answer:</strong> 0. The CLT tells us that Z follows a
+normal distribution with mean 0 and standard deviation 1.</p></li>
+<li><p>The result of 4 and 5 tell us that we know the
+<strong>distribution of the difference between our estimate and what we
+want to estimate, but don’t know</strong>. However, the equation
+involves the population standard deviation σX, which we don’t know.
+Given what we discussed, what is your estimate of σx?<br />
+–&gt; <strong>Answer:</strong> σx is estimated as the <strong>standard
+deviation of the sample sx</strong>, based on CLT.</p></li>
+<li><p>Use the CLT to approximate the probability that our estimate Xbar
+is off by more than 5.21 ounces from µX.</p></li>
+</ol>
+<p>–&gt; <strong>Answer:</strong> this means that we want to calculate
+the probability that the absolute value of the difference between Xbar
+and µX is greater than 5.21 ounces. We want to find
+<code>P(|Z| &gt; (5.21 / (σx/√n)))</code> or
+<code>P(|Z| &gt; z0)</code>. This can be calculated using the cumulative
+distribution function of the normal distribution.</p>
+<pre class="r"><code>#Use sd() instead of popsd() to estimate σx, because we only have one sample and thus we need to use the sample standard deviation with N-1 in the denominator.
+z0 &lt;- 5.21 / (sd(X) / sqrt(length(X)))
+z0 &lt;- sqrt(12) * 5.21/ sd(X) #same as above
+(1- pnorm(q= z0, mean = 0, sd= 1)) + pnorm(q= -z0, mean = 0, sd= 1)</code></pre>
+<pre><code>[1] 2.356222e-09</code></pre>
+<p>This prob is very small, which means that it is very unlikely that
+our estimate Xbar is off by more than 5.21 ounces from µX, according to
+the CLT approximation. This means <strong>our sample average is a good
+estimate of the population mean µX.</strong></p>
+<p>8 (theory on page 35). Now we introduce the concept of a null
+hypothesis. We don’t know µx nor µy. We want to quantify what the data
+say about the possibility that the diet has no effect: µx = µy. If we
+use CLT, then we approximate the distribution of <code>Xbar</code> as
+normal with mean µX and standard deviation σX and the distribution of
+<code>Ybar</code> as normal with mean µY and standard deviation σY. This
+implies that the difference <code>Ybar−Xbar</code> has mean 0 (there is
+no difference). We described that the standard deviation of this
+statistic (the standard error) is SE(Xbar−Ybar) = sqrt(σx^2/n + σy^2/n)
+and that we estimate the population standard deviations σx and σy with
+the sample estimates. What is the estimate of SE(Xbar−Ybar) =
+sqrt(σx^2/n + σy^2/n)?</p>
+<pre class="r"><code>sd_X &lt;- sd(X)
+sd_Y &lt;- sd(Y)
+SE &lt;- sqrt(sd_X^2/length(X) + sd_Y^2/length(Y))
+SE</code></pre>
+<pre><code>[1] 1.469867</code></pre>
+<ol start="9" style="list-style-type: decimal">
+<li>So now we can compute <code>Ybar−Xbar</code> as well as an estimate
+of this standard error and construct a t-statistic. What is this
+t-statistic?</li>
+</ol>
+<p>–&gt; <strong>Answer:</strong>
+<code>t = (Ybar−Xbar) / SE(Xbar−Ybar)</code></p>
+<ol start="10" style="list-style-type: decimal">
+<li>If we apply the CLT, what is the distribution of this
+t-statistic?</li>
+</ol>
+<ol style="list-style-type: upper-alpha">
+<li>Normal with mean 0 and standard deviation 1. –&gt; Correct. The CLT
+tells us that <strong>under the null hypothesis that there is no
+difference between the population averages</strong>, the distribution of
+the difference between the sample means (Ybar−Xbar) is approximately
+normal with mean 0 and standard deviation SE(Xbar−Ybar). Thus, when we
+standardize this difference by dividing by its estimated standard error,
+we get a t-statistic that follows a normal distribution with mean 0 and
+standard deviation 1 under the null hypothesis.</li>
+</ol>
+<ol start="11" style="list-style-type: decimal">
+<li>Now we are ready to compute a p-value using the CLT. What is the
+probability of observing a quantity as large as what we computed in 10,
+when the null distribution is true?</li>
+</ol>
+<p>–&gt; <strong>Answer:</strong> We can compute the p-value using the
+cumulative distribution function of the normal distribution.</p>
+<pre class="r"><code>t_statistic &lt;- (mean(Y) - mean(X)) / SE
+t_statistic</code></pre>
+<pre><code>[1] 2.055174</code></pre>
+<pre class="r"><code>p_value &lt;- 2 * (1 - pt(abs(t_statistic), df=22)) #this use t-distribution with df=22 (n1+n2-2) to compute the p-value, 
+#because we are estimating the population standard deviation with the sample standard deviation, and thus we need to account 
+#for this additional variability by using the t-distribution instead of the normal distribution.
+p_value</code></pre>
+<pre><code>[1] 0.0519248</code></pre>
+<pre class="r"><code>p_value_clt &lt;- 2 * (1 - pnorm(abs(t_statistic)))
+p_value_clt &lt;- (1 - pnorm(abs(t_statistic)))+ pnorm(-abs(t_statistic)) #same as above
+p_value_clt</code></pre>
+<pre><code>[1] 0.0398622</code></pre>
+<ol start="12" style="list-style-type: decimal">
+<li>CLT provides an approximation for cases in which the sample size is
+large. In practice, we can’t check the assumption because we only get to
+see 1 outcome (which you computed above). As a result, if this
+approximation is off, so is our p-value. As described earlier, there is
+another approach that does not require a large sample size, but rather
+that the distribution of the population is approximately normal. We
+don’t get to see this distribution so it is again an assumption,
+although we can look at the distribution of the sample with qqnorm(X)
+and qqnorm(Y). If we are willing to assume this, then it follows that
+the t-statistic follows t-distribution. What is the p-value under the
+t-distribution approximation? Hint: use the t.test function.</li>
+</ol>
+<p>–&gt; Rephrase: CLT Problem: Works for large n (like n=30+), but here
+n=12 is small → p-value might be inaccurate. Better Alternative (no
+large n needed):<br />
+- Assume X and Y data are approximately normal (check with qqnorm(X) and
+qqnorm(Y) plots).<br />
+- Then t-statistic exactly follows t-distribution with df=22 (not just
+CLT approximation).</p>
+<pre class="r"><code>par(mfrow=c(1,2))
+qqnorm(X)
+qqline(X)
+
+qqnorm(Y)
+qqline(Y)</code></pre>
+<p><img src="figure/01_Inference.Rmd/unnamed-chunk-46-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>t_test_result &lt;- t.test(X, Y, var.equal = TRUE) 
+#var.equal=TRUE assumes that the population variances are equal, which is a common assumption in 
+# two-sample t-tests. If we do not want to assume equal variances, we can set var.equal=FALSE, 
+# which will perform Welch&#39;s t-test that does not assume equal variances.
+t_test_result</code></pre>
+<pre><code>
+    Two Sample t-test
+
+data:  X and Y
+t = -2.0552, df = 22, p-value = 0.05192
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -6.06915183  0.02748516
+sample estimates:
+mean of x mean of y 
+ 23.81333  26.83417 </code></pre>
+<ol start="13" style="list-style-type: decimal">
+<li>With the CLT distribution, we obtained a p-value smaller than 0.05
+and with the t-distribution, one that is larger. They can’t both be
+right. What best describes the difference?</li>
+</ol>
+<ol style="list-style-type: upper-alpha">
+<li><p>A sample size of 12 is not large enough, so we have to use the
+t-distribution approximation.<br />
+–&gt; <strong>Correct but not complete</strong>: With a sample size of
+12, the CLT approximation may not be accurate, and thus the p-value
+obtained from the CLT may be misleading. <strong>t works regardless of n
+size if normal</strong>.</p></li>
+<li><p>These are two different assumptions. The t-distribution accounts
+for the variability introduced by the estimation of the standard error
+and thus, under the null, large values are more probable under the null
+distribution.<br />
+–&gt; <strong>Correct</strong>: The t-distribution accounts for the
+additional variability introduced by estimating the population standard
+deviation with the sample standard deviation. <strong>t has fatter tails
+because sample SE varies</strong>.</p></li>
+<li><p>The population data is probably not normally distributed so the
+t-distribution approximation is wrong. –&gt; <strong>Wrong</strong>: We
+can check the normality assumption with the qqnorm plots. If the data
+points in the qqnorm plots approximately follow a straight line, then
+the normality assumption is reasonable, and thus the t-distribution
+approximation is appropriate.</p></li>
+<li><p>Neither assumption is useful. Both are wrong. –&gt;
+<strong>Wrong</strong>: The t-distribution approximation is useful when
+the sample size is small and the normality assumption is reasonable,
+which seems to be the case here based on the qqnorm plots.</p></li>
+</ol>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -1710,7 +2311,7 @@ BLAS:   /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRbla
 LAPACK: /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.12.0
 
 locale:
-[1] C/UTF-8/C/C/C/C
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
 
 time zone: Europe/Paris
 tzcode source: internal

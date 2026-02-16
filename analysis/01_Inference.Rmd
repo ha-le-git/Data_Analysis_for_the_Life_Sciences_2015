@@ -1,5 +1,35 @@
 # Chapter 1: Inference
 
+From the following exercises, we obtain some remarks:  
+1. Normal distribution:  
+- The average of a random sample is a random variable.  
+- The distribution of a random variable is the distribution of the list of values obtained if 
+we repeated the experiment an infinite number of times. Increasing the number of times we repeat the 
+experiment does not change drastically the distribution, but it allows us to better approximate it.  
+- Increasing the sample size changes the random variable and thus its distribution.  
+For eg: The larger the sample size, the smaller the spread of the distribution of mean(pop)-mean(sample).  
+
+2. Populations, samples and estimates:  
+
+3. Central Limit Theorem and t-distribution:  
+- Use `popsd()` and `popvar()` of `rafalib` package to compute population standard deviation and variance.  
+- Use `sd()` and `var()` to compute sample standard deviation and variance (with N-1 in the denominator).  
+- When the distribution of the population values is approximately normal, as it is for the weights, 
+the t-distribution provides a better approximation. The t-distribution has larger tails up until 30 
+degrees of freedom, at which point it is practically the same as the normal distribution.  
+
+4. Central Limit Theorem in practice:  
+- The variance of binary data is `p * (1-p)`, where p is the success probability. For quantitative data, 
+we need to estimate the population standard deviation.  
+- With very low probabilities, we need larger sample sizes for the CLT to “kick in”.  
+- The CLT tells us that the distribution of `Xbar` is approximately normal with mean **µX** and 
+standard deviation σx/√n, where σx is the population standard deviation and n is the sample size. 
+**Ideally, Xbar is obtained after infinite number of sampling of size n from the population.** In
+practice, we only sample Xbar once. The bigger the sample size n, the smaller the SD of Xbar.
+- `Z= √n*(Xbar-µX)/σx` follows a normal distribution with mean 0 and standard deviation 1. Important, 
+both Z and Xbar are random variables and follow a distribution. 
+
+
 ## Normal Distribution
 
 For these exercises, we will be using the following dataset:
@@ -79,8 +109,8 @@ hist(null)
 7. Note that the answers to 5 and 6 barely changed. This is expected. The way we think 
 about the random value distributions is as the distribution of the list of values 
 obtained if we repeated the experiment an infinite number of times. On a computer, we 
-can’t perform an infinite number of iterations so instead, for our examples, we consider 1,000 to be large
-enough, thus 10,000 is as well. Now if instead we change the sample size, then we change
+can’t perform an infinite number of iterations so instead, for our examples, we consider 1,000 
+to be large enough, thus 10,000 is as well. Now if instead we change the sample size, then we change
 the random variable and thus its distribution.
 
 Set the seed at 1, then using a for-loop take a random sample of 50 mice 1,000 times. 
@@ -151,7 +181,7 @@ head(dat)
 1. Use dplyr to create a vector x with the body weight of all males on the control (chow) diet.
 What is this population’s average?
 
-```{r}
+```{r , warning=FALSE}
 library(dplyr)
 m_chow <- dat %>%
     filter(Sex == "M", Diet == "chow") %>%
@@ -262,7 +292,8 @@ sample variable has less variability.
 When the sample size is large, the average of a random sample follows a normal distribution 
 centered at the population average µ and with standard deviation equal to the population 
 standard deviation σ, divided by the square root of the sample size N. We refer to the 
-standard deviation of the distribution of a random variable as the random variable’s **standard error**.
+standard deviation of the distribution of a random variable as the random variable’s 
+**standard error**.
 
 ```{r}
 library(downloader)
@@ -380,13 +411,15 @@ qqnorm(y_f_hf)
 qqline(y_f_hf)
 ```
 
-**Answer:** A) The CLT tells us that sample averages are approximately normal.
+**Answer:** A) The CLT tells us that sample averages are approximately normal when the sample size
+is large.
 
 9. Here we are going to use the function `replicate` to learn about the distribution of random
 variables. All the above exercises relate to the normal distribution as an approximation of the
 distribution of a fixed list of numbers or a population. We have not yet discussed probability
 in these exercises. If the distribution of a list of numbers is approximately normal, then if
-we pick a number at random from this distribution, it will follow a normal distribution.
+we pick a number at random from this distribution, it will follow a normal distribution.  
+
 However, it is important to remember that stating that some quantity has a distribution does
 not necessarily imply this quantity is random. Also, keep in mind that this is not related to
 the central limit theorem. The central limit applies to averages of random variables. Let’s
@@ -420,6 +453,9 @@ mean(avgs)
 
 ```{r}
 sd(avgs)
+#sd() and var() computes sample SD with N-1 in the denominator:
+samplevar <- sum((avgs-mean(avgs))^2)/(length(avgs)-1)
+samplevar == var(avgs)
 ```
 
 11. According to the CLT, the answer to exercise 9 should be the same as mean(y). You should
@@ -443,15 +479,15 @@ population SD is about 4.5. What proportion of the sample SDs are below 3.5?
 set.seed(1)
 y <- dat %>% filter(Sex=="M" & Diet=="chow") %>% select(Bodyweight) %>% unlist
 sds <- replicate(10000, sd(sample(y, 25)))
+hist(sds)
 mean(sds < 3.5)
 ```
 
 13. What the answer to question 12 reveals is that the denominator of the t-test is a random
 variable. By decreasing the sample size, you can see how this variability can increase.
 It therefore adds variability. The smaller the sample size, the more variability is added.
-The normal distribution stops providing a useful approximation. When the distribution of
-the population values is approximately normal, as it is for the weights, the t-distribution
-provides a better approximation. We will see this later on. Here we will look at the difference
+The normal distribution stops providing a useful approximation. When the distribution of the population values is approximately normal, as it is for the weights, 
+the t-distribution provides a better approximation. We will see this later on. Here we will look at the difference
 between the t-distribution and normal. Use the function qt and qnorm to get the quantiles of
 x=seq(0.0001,0.9999,len=300). Do this for degrees of freedom 3, 10, 30, and 100. Which
 of the following is true?
@@ -628,7 +664,7 @@ Y <- filter(dat, Diet=="hf") %>% select(Bodyweight) %>% unlist
 We think of X as a random sample from the population of all mice in the control diet and Y as a random 
 sample from the population of all mice in the high fat diet.
 
-Define the parameter µx as the average of the control population. We estimate thisparameter with the 
+Define the parameter µx as the average of the control population. We estimate this parameter with the 
 sample average. What is the sample average?
 
 ```{r} 
@@ -648,7 +684,8 @@ C) Xbar follows a normal distribution with mean µX and standard deviation σx w
 --> **Wrong**: The standard deviation of the distribution of Xbar is not σx, but σx/√n.  
 
 D) Xbar follows a normal distribution with mean µX and standard deviation σx/√12 where σx is the population standard deviation.  
---> **Correct**: The CLT tells us that the distribution of Xbar is approximately normal with mean **µX or µx** and standard deviation σx/√n, where σx is the population standard deviation and n is the sample size (12 in this case).  
+--> **Correct**: The CLT tells us that the distribution of Xbar is approximately normal with mean **µX** and standard deviation σx/√n, 
+where σx is the population standard deviation and n is the sample size (12 in this case).  
 
 5. The result above tells us the distribution of the following random variable: `Z= √12*(Xbar-µX)/σx`.
 What does the CLT tell us is the mean of Z (you don’t need code)?  
@@ -657,19 +694,19 @@ What does the CLT tell us is the mean of Z (you don’t need code)?
 6. The result of 4 and 5 tell us that we know the **distribution of the difference between our estimate and what we want to estimate, but don’t know**. 
 However, the equation involves the population standard deviation σX, which we don’t know. Given what we discussed,
 what is your estimate of σx?  
---> **Answer:** σx is estimated as √n * standard deviation of the sample, based on CLT.
+--> **Answer:** σx is estimated as the **standard deviation of the sample sx**, based on CLT.
 
 7. Use the CLT to approximate the probability that our estimate Xbar is off by more than 5.21 ounces from µX.
 
 --> **Answer:** this means that we want to calculate the probability that the absolute value of the 
-difference between Xbar and µX is greater than 5.21 ounces. We can standardize this difference using
-the estimated standard deviation from CLT, which is σx/√n. The standardized variable would be 
-`Z = (Xbar - µX) / (σx/√n)`. We want to find `P(|Z| > 5.21 / (σx/√n))`. This can be calculated 
-using the cumulative distribution function of the normal distribution.
+difference between Xbar and µX is greater than 5.21 ounces. We want to find `P(|Z| > (5.21 / (σx/√n)))` 
+or `P(|Z| > z0)`. This can be calculated using the cumulative distribution function of the normal distribution.
 
 ```{r}
-z_score <- 5.21 / (popsd(X) / sqrt(length(X)))
-pnorm(q = -z_score, mean = 0, sd = 1) + (1 - pnorm(q = z_score, mean = 0, sd = 1))
+#Use sd() instead of popsd() to estimate σx, because we only have one sample and thus we need to use the sample standard deviation with N-1 in the denominator.
+z0 <- 5.21 / (sd(X) / sqrt(length(X)))
+z0 <- sqrt(12) * 5.21/ sd(X) #same as above
+(1- pnorm(q= z0, mean = 0, sd= 1)) + pnorm(q= -z0, mean = 0, sd= 1)
 ```
 
 This prob is very small, which means that it is very unlikely that our estimate Xbar is off by more than 5.21 ounces from µX, 
@@ -679,30 +716,104 @@ according to the CLT approximation. This means **our sample average is a good es
 quantify what the data say about the possibility that the diet has no effect: µx = µy. If we
 use CLT, then we approximate the distribution of `Xbar` as normal with mean µX and standard
 deviation σX and the distribution of `Ybar` as normal with mean µY and standard deviation
-σY. This implies that the difference `Ybar−Xbar` has mean 0 (there is no difference). We described that the standard deviation of 
-this statistic (the standard error) is SE(Xbar−Ybar) = sqrt(σx^2/n + σy^2/n) and that
+σY. This implies that the difference `Ybar−Xbar` has mean 0 (there is no difference). We described that the 
+standard deviation of this statistic (the standard error) is SE(Xbar−Ybar) = sqrt(σx^2/n + σy^2/n) and that
 we estimate the population standard deviations σx and σy with the sample estimates. What is the 
 estimate of SE(Xbar−Ybar) = sqrt(σx^2/n + σy^2/n)?
 
-Under the null hypothesis that there is no difference between the population averages, the difference between
-the sample averages `Ybar−Xbar`, with `Ybar` and `Xbar` being the sample average for the two diets respectively,
-is approximated by a normal distribution centered at 0 (there is no difference) and with standard error SE(Xbar−Ybar) 
-= sqrt(σx^2/n + σy^2/n).
-
 ```{r}
-σx <- popsd(X) * sqrt(length(X))
-σy <- popsd(Y) * sqrt(length(Y))
-SE <- sqrt(σx^2/length(X) + σy^2/length(Y))
+sd_X <- sd(X)
+sd_Y <- sd(Y)
+SE <- sqrt(sd_X^2/length(X) + sd_Y^2/length(Y))
 SE
 ```
 
 9. So now we can compute `Ybar−Xbar` as well as an estimate of this standard error and construct
 a t-statistic. What is this t-statistic?
 
+--> **Answer:** `t = (Ybar−Xbar) / SE(Xbar−Ybar)`
+
+10. If we apply the CLT, what is the distribution of this t-statistic?  
+
+A) Normal with mean 0 and standard deviation 1.
+--> Correct. The CLT tells us that **under the null hypothesis that there is no difference between the population averages**,
+the distribution of the difference between the sample means (Ybar−Xbar) is approximately normal with mean 
+0 and standard deviation SE(Xbar−Ybar). Thus, when we standardize this difference by dividing by its 
+estimated standard error, we get a t-statistic that follows a normal distribution with mean 0 and 
+standard deviation 1 under the null hypothesis.
+
+11. Now we are ready to compute a p-value using the CLT. What is the probability of observing
+a quantity as large as what we computed in 10, when the null distribution is true?
+
+--> **Answer:** We can compute the p-value using the cumulative distribution function of the normal 
+distribution.
+
 ```{r}
 t_statistic <- (mean(Y) - mean(X)) / SE
+t_statistic
 
+p_value <- 2 * (1 - pt(abs(t_statistic), df=22)) #this use t-distribution with df=22 (n1+n2-2) to compute the p-value, 
+#because we are estimating the population standard deviation with the sample standard deviation, and thus we need to account 
+#for this additional variability by using the t-distribution instead of the normal distribution.
+p_value
 
+p_value_clt <- 2 * (1 - pnorm(abs(t_statistic)))
+p_value_clt <- (1 - pnorm(abs(t_statistic)))+ pnorm(-abs(t_statistic)) #same as above
+p_value_clt
+```
+
+12. CLT provides an approximation for cases in which the sample size is large. In practice, we
+can’t check the assumption because we only get to see 1 outcome (which you computed
+above). As a result, if this approximation is off, so is our p-value. As described earlier, there
+is another approach that does not require a large sample size, but rather that the distribution
+of the population is approximately normal. We don’t get to see this distribution so it is
+again an assumption, although we can look at the distribution of the sample with qqnorm(X)
+and qqnorm(Y). If we are willing to assume this, then it follows that the t-statistic follows
+t-distribution. What is the p-value under the t-distribution approximation? Hint: use the
+t.test function.  
+
+--> Rephrase: CLT Problem: Works for large n (like n=30+), but here n=12 is small → p-value might be inaccurate.
+Better Alternative (no large n needed):  
+- Assume X and Y data are approximately normal (check with qqnorm(X) and qqnorm(Y) plots).  
+- Then t-statistic exactly follows t-distribution with df=22 (not just CLT approximation).
+
+```{r}
+par(mfrow=c(1,2))
+qqnorm(X)
+qqline(X)
+
+qqnorm(Y)
+qqline(Y)
+```
+
+```{r}
+t_test_result <- t.test(X, Y, var.equal = TRUE) 
+#var.equal=TRUE assumes that the population variances are equal, which is a common assumption in 
+# two-sample t-tests. If we do not want to assume equal variances, we can set var.equal=FALSE, 
+# which will perform Welch's t-test that does not assume equal variances.
+t_test_result
+```
+
+13. With the CLT distribution, we obtained a p-value smaller than 0.05 and with the t-distribution, one that is larger. 
+They can’t both be right. What best describes the difference?  
+
+A) A sample size of 12 is not large enough, so we have to use the t-distribution approximation.  
+--> **Correct but not complete**: With a sample size of 12, the CLT approximation may not be accurate, and thus the p-value obtained 
+from the CLT may be misleading. **t works regardless of n size if normal**.  
+
+B) These are two different assumptions. The t-distribution accounts for the variability introduced by the estimation 
+of the standard error and thus, under the null, large values are more probable under the null distribution.  
+--> **Correct**: The t-distribution accounts for the additional variability introduced by estimating the population 
+standard deviation with the sample standard deviation. **t has fatter tails because sample SE varies**.  
+
+C) The population data is probably not normally distributed so the t-distribution approximation is wrong.
+--> **Wrong**: We can check the normality assumption with the qqnorm plots. If the data points in the qqnorm plots 
+approximately follow a straight line, then the normality assumption is reasonable, and thus the t-distribution 
+approximation is appropriate.  
+
+D) Neither assumption is useful. Both are wrong.
+--> **Wrong**: The t-distribution approximation is useful when the sample size is small and the normality assumption is 
+reasonable, which seems to be the case here based on the qqnorm plots.  
 
 
 
